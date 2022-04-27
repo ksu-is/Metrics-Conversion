@@ -1,0 +1,96 @@
+def convert_to_storage_unit(self, i_value_in_this_unit):
+        """
+        .. note::
+            CAA V5 Visual Basic Help (2020-06-11 12:40:47.360445))
+                | o Func ConvertToStorageUnit(double iValueInThisUnit) As
+                | double
+                | 
+                |     Convert the initial value in its equivalent in storage
+                |     unit.
+                | 
+                |     Parameters:
+                | 
+                |         iValueInThisUnit
+                |             The initial value in the current unit. 
+                |         oValueInStorageUnit
+                |             The final value in the corresponding storage unit.
+
+        :param float i_value_in_this_unit:
+        :return: float
+        """
+        return self.unit.ConvertToStorageUnit(i_value_in_this_unit) 
+        
+        
+        
+        
+        
+        def convert_unit(source_unit, target_unit, source_value,
+                     source_period=None, target_period=None):
+        """Convert value per unit from source to target unit. If a unit is
+        absolute, total timedelta period has to be provided. If a unit is a
+        month or a year, it is recommended to pass timedelta period object
+        directly, if not provided, the approximation will be used.
+        """
+        if (target_unit == 'absolute' and not target_period) or \
+           (source_unit == 'absolute' and not source_period):
+                raise ValueError('Absolute period needs to be provided.')
+                return
+        if not source_period:
+            source_period = QuantitativeState._get_period_from_unit(
+                source_unit)
+        if not target_period:
+            target_period = QuantitativeState._get_period_from_unit(
+                target_unit)
+        if source_unit == 'second':
+            return QuantitativeState.from_seconds(source_value, target_period)
+        if target_unit == 'second':
+            return QuantitativeState.value_per_second(
+                source_value, source_period)
+        return round(source_value * (target_period / source_period)) 
+        There is a program in Python called Pint that you add using the code:
+        
+     
+$ pip install -U pint
+and it is also on GitHub
+github.com/hgrecco/pint.git
+
+
+
+
+
+Code example written out from Youtube video:
+def print_menu():
+print('1. Kilometers to Miles')
+print('2. Miles to Kilometers')
+
+def km_miles():
+km = float(input('Enter a distance in kilometers: '))
+miles = km / 1.609
+print('Distance in miles: (0)'.formate(miles))
+
+def miles_km():
+miles=float(input('Enter a distance in miles: '))
+km = miles * 1.609
+print('Distance in kilometers: (0)'.formate(km))
+
+print_menu()
+
+Choice = input('Which conversion would you like to do?: ')
+
+if choice == '1':
+km_miles()
+if choice == '2':
+miles_km()
+
+
+Simple way to do a converion is to use a dictionary with conversion factors and a function that calls them:
+Ex:
+def convert_SI(val, unit_in, unit_out):
+    SI = {'mm':0.001, 'cm':0.01, 'm':1.0, 'km':1000.}
+    return val*SI[unit_in]/SI[unit_out]
+    >>> convert_SI(1, 'm', 'km')
+0.001
+>>> convert_SI(1, 'km', 'm')
+1000.0
+>>> convert_SI(1, 'cm', 'm')
+0.01
